@@ -1,5 +1,6 @@
 import { Controller, Param, Body, Get, Post, Put, Delete } from '@nestjs/common';
-import { AppService, Todo } from './app.service';
+import { AppService } from './app.service';
+import { Todo } from './interfaces/todo.interface';
 
 @Controller()
 export class AppController {

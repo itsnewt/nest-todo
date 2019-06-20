@@ -1,42 +1,58 @@
-import { Injectable } from '@nestjs/common';
-
-export interface Todo {
-  id: number;
-  title: string;
-  description?: string;
-}
+import { Model } from 'mongoose';
+import { Injectable, Inject } from '@nestjs/common';
+import { Todo } from './interfaces/todo.interface';
 
 @Injectable()
 export class AppService {
-  todos: Array<Todo> = [
-    {
-      id: 1,
-      title: 'Woohoo'
-    },
-    {
-      id: 2,
-      title: 'Test 2',
-      description: 'This is utilizing all of the fields!'
+  constructor(
+    @Inject('TODO_MODEL')
+    private readonly todos: Model<Todo>
+  ) {}
+
+  async getTodos(): Promise<Todo[]> {
+    return await this.todos.find();
+  }
+
+  async getTodo(id: number): Promise<Todo> {
+    // @ts-ignore
+    return await this.todos
+      .find({ id });
+  }
+
+  async createTodo(todo: Todo): Promise<Todo> {
+    // @ts-ignore
+    let finalTodo: Todo = {
+      id: await this.todos.find().exec().then(todos => todos.length+1),
+      title: todo.title
+    };
+
+    if (todo.description) {
+      finalTodo['description'] = todo.description;
     }
-  ]
-
-  getTodos() {
-    return this.todos;
+    
+    await this.todos.create(finalTodo);
+    return finalTodo;
   }
 
-  getTodo(id: number) {
-    return this.todos.filter(todo => todo.id == id);
+  async updateTodo(todo: Todo): Promise<Object> {
+    const todoData = await this.todos.findOne({ id: todo.id }, '-_id');
+
+    await this.todos.updateOne({ id: todo.id }, {...todo});
+
+    return {
+      message: 'Successfully updated.',
+      oldData: todoData,
+      newData: todo
+    };
   }
 
-  createTodo(todo: Todo): Array<Todo> {
-    return this.todos = [...this.todos, {...todo}];
-  }
+  async deleteTodo(id: number): Promise<Object> {
+    const todo = await this.todos.findOne({ id }, '-_id');
+    await todo.remove();
 
-  updateTodo(todo: Todo) {
-    return this.todos = this.todos.map(t => t.id === todo.id ? {...todo} : t);
-  }
-
-  deleteTodo(id: number) {
-    return this.todos = this.todos.filter(todo => todo.id != id);
+    return {
+      message: 'Successfully deleted.',
+      todo
+    };
   }
 }
