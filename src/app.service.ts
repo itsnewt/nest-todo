@@ -27,4 +27,8 @@ export class AppService {
   getTodo(id: number): Todo {
     return this.todos.filter(todo => todo.id == id);
   }
+
+  createTodo(todo: Todo): Array<Todo> {
+    return this.todos = [...this.todos, {...todo}];
+  }
 }
