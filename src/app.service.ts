@@ -35,4 +35,8 @@ export class AppService {
   updateTodo(todo: Todo) {
     return this.todos = this.todos.map(t => t.id === todo.id ? {...todo} : t);
   }
+
+  deleteTodo(id: number) {
+    return this.todos = this.todos.filter(todo => todo.id != id);
+  }
 }

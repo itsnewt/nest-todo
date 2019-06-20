@@ -1,4 +1,4 @@
-import { Controller, Param, Body, Get, Post, Put } from '@nestjs/common';
+import { Controller, Param, Body, Get, Post, Put, Delete } from '@nestjs/common';
 import { AppService, Todo } from './app.service';
 
 @Controller()
@@ -23,5 +23,10 @@ export class AppController {
   @Put()
   updateTodo(@Body() todo: Todo) {
     return this.appService.updateTodo(todo);
+  }
+
+  @Delete(':id')
+  deleteTodo(@Param('id') id: number) {
+    return this.appService.deleteTodo(id);
   }
 }
