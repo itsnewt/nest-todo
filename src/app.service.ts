@@ -10,13 +10,11 @@ export class AppService {
   ) {}
 
   async getTodos(): Promise<Todo[]> {
-    return await this.todos.find();
+    return await this.todos.find(null, '-_id');
   }
 
   async getTodo(id: number): Promise<Todo> {
-    // @ts-ignore
-    return await this.todos
-      .find({ id });
+    return await this.todos.findOne({ id }, '-_id');
   }
 
   async createTodo(todo: Todo): Promise<Todo> {
