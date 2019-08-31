@@ -12,7 +12,9 @@
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && npm run build",
     "start:prod": "node dist/main.js",
-    "lint": "tslint -p tsconfig.json -c tslint.json"
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@nestjs/common": "^6.3.1",
@@ -22,7 +24,8 @@
     "mongoose": "^5.6.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^2.6.3",
-    "rxjs": "^6.5.2"
+    "rxjs": "^6.5.2",
+    "snyk": "^1.222.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.0",
@@ -38,5 +41,6 @@
     "tslint": "5.17.0",
     "typescript": "3.5.2",
     "wait-on": "^3.2.0"
-  }
+  },
+  "snyk": true
 }
