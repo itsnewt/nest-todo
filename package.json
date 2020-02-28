@@ -40,7 +40,7 @@
     "tsconfig-paths": "3.8.0",
     "tslint": "5.17.0",
     "typescript": "3.7.5",
-    "wait-on": "^3.2.0"
+    "wait-on": "^4.0.1"
   },
   "snyk": true
 }
