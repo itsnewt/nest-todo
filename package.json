@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "A simple todo API made using Nest.",
-  "author": "Jacob Smith",
+  "author": "newt",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
